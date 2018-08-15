@@ -1,0 +1,19 @@
+build: off
+version: 1.1.82.0.{build}
+
+environment:
+  PYTHON: "C:\\Python37-x64"
+
+  matrix:
+    - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+      ARCH_BUILD: x86_64
+      ARCH: x86_64
+
+install:
+  - set PATH=%PYTHON%/Scripts;%PYTHON%;%PATH%
+  - pip.exe install conan --upgrade
+  - pip.exe install sesame-package-tools conan-package-tools bincrafters-package-tools --upgrade
+  - conan user
+
+test_script:
+  - sesame build --windows --upload
