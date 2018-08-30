@@ -1,5 +1,4 @@
 build: off
-version: 1.1.82.0.{build}
 
 environment:
   PYTHON: "C:\\Python37-x64"
@@ -11,8 +10,8 @@ environment:
 
 install:
   - set PATH=%PYTHON%/Scripts;%PYTHON%;%PATH%
-  - pip.exe install conan --upgrade
-  - pip.exe install sesame-package-tools conan-package-tools bincrafters-package-tools --upgrade
+  - pip.exe install --upgrade conan
+  - pip.exe install --upgrade sesame-package-tools conan-package-tools bincrafters-package-tools
   - conan user
 
 test_script:

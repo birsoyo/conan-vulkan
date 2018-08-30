@@ -10,3 +10,4 @@ file(GLOB SOURCE_FILES *.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 target_link_libraries(${PROJECT_NAME} CONAN_PKG::vulkan)
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)

@@ -5,13 +5,13 @@ from conans import ConanFile, tools
 
 class VulkanConan(ConanFile):
     name = 'vulkan'
-    version = '1.1.82.0'
-    description = '<Description of Vulkan here>.'
+    version = '1.1.82.1'
+    description = 'The LunarG Vulkan SDK provides the development and runtime components required to build, run, and debug Vulkan applications.'
     url = 'https://github.com/birsoyo/conan-vulkan'
-    homepage = 'https://github.com/original_author/original_lib'
+    homepage = 'https://vulkan.lunarg.com/sdk/home'
     author = 'Orhun Birsoy <orhunbirsoy@gmail.com>'
 
-    license = '<Indicates License type of the packaged library>'
+    license = 'Various'
 
     # Packages the license for the conanfile.py
     exports = ['LICENSE.md']
@@ -32,6 +32,10 @@ class VulkanConan(ConanFile):
             tools.download(win_url, 'vulkan-installer.exe')
             self.run('vulkan-installer.exe /S')
         else:
+            if self.settings.os == 'Linux':
+                url = lin_url
+            elif self.settings.os == 'Macos':
+                url = mac_url
             tools.get(url, keep_permissions=True)
 
     def package(self):
