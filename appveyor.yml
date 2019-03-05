@@ -10,9 +10,10 @@ environment:
 
 install:
   - set PATH=%PYTHON%/Scripts;%PYTHON%;%PATH%
-  - pip.exe install --upgrade conan
-  - pip.exe install --upgrade sesame-package-tools conan-package-tools bincrafters-package-tools
+  - pip.exe install --upgrade conan conan-package-tools
+  - pip.exe install --upgrade sesame-package-tools
   - conan user
+  - conan profile new --detect default
 
 test_script:
-  - sesame build --windows --upload
+  - sesame build --windows --upload --channel stable

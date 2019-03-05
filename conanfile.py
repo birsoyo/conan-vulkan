@@ -5,8 +5,8 @@ from conans import ConanFile, tools
 
 class VulkanConan(ConanFile):
     name = 'vulkan'
-    version = '1.1.82.1'
-    description = 'The LunarG Vulkan SDK provides the development and runtime components required to build, run, and debug Vulkan applications.'
+    version = '1.1.101.0'
+    description = 'The Vulkan SDK provides the development and runtime components required to build, run, and debug Vulkan applications.'
     url = 'https://github.com/birsoyo/conan-vulkan'
     homepage = 'https://vulkan.lunarg.com/sdk/home'
     author = 'Orhun Birsoy <orhunbirsoy@gmail.com>'
@@ -30,7 +30,7 @@ class VulkanConan(ConanFile):
 
         if self.settings.os == 'Windows':
             tools.download(win_url, 'vulkan-installer.exe')
-            self.run('vulkan-installer.exe /S')
+            self.run(f'7z x -snl -y -mmt{tools.cpu_count()} -osdk vulkan-installer.exe')
         else:
             if self.settings.os == 'Linux':
                 url = lin_url
@@ -42,13 +42,16 @@ class VulkanConan(ConanFile):
         self.copy(pattern='LICENSE', dst='licenses', src=self.source_subfolder)
 
         if self.settings.os == 'Windows':
-            location = f'C:\\VulkanSDK\\{self.version}'
+            location = f'sdk'
             inc_folder = os.path.join(location, 'Include')
             if self.settings.arch == 'x86':
+                bin_folder = os.path.join(location, 'Bin32')
                 lib_folder = os.path.join(location, 'Lib32')
             elif self.settings.arch == 'x86_64':
+                bin_folder = os.path.join(location, 'Bin')
                 lib_folder = os.path.join(location, 'Lib')
 
+        self.copy(pattern='*.exe', dst='bin', src=bin_folder, excludes='*cube*')
         self.copy(pattern='*', dst='include', src=inc_folder)
         self.copy(pattern='*', dst='lib', src=lib_folder)
 
